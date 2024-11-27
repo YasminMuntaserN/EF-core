@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("study-center-ef")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eaeb243b439706d77636e251ee26d10edb31f844")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebbdf56a08e1ea2212d9f1c65dd4cda402d995b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("study-center-ef")]
 [assembly: System.Reflection.AssemblyTitleAttribute("study-center-ef")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
