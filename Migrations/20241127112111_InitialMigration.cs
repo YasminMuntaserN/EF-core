@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace study_center_ef.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -106,11 +106,17 @@ namespace study_center_ef.Migrations
                     StudentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonID = table.Column<int>(type: "int", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "DateTime", nullable: false)
+                    GradeLevelID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.StudentID);
+                    table.ForeignKey(
+                        name: "FK_Students_GradeLevels_GradeLevelID",
+                        column: x => x.GradeLevelID,
+                        principalTable: "GradeLevels",
+                        principalColumn: "GradeLevelID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Students_People_PersonID",
                         column: x => x.PersonID,
@@ -192,6 +198,19 @@ namespace study_center_ef.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "People",
+                columns: new[] { "PersonID", "Address", "DateOfBirth", "Email", "FirstName", "Gender", "LastName", "PhoneNumber", "SecondName", "ThirdName" },
+                values: new object[,]
+                {
+                   { 1, "123 Elm Street, Springfield", "1990-05-14", "john.doe@email.com", "John", (byte)1, "Doe", "123-456-7890", "Michael", "David" },
+                   { 2, "456 Oak Avenue, Springfield", "1995-08-22", "jane.smith@email.com", "Jane", (byte)2, "Smith", "987-654-3210", "Maria", "Ann" },
+                   { 3, "789 Pine Road, Springfield", "1988-11-30", "mark.johnson@email.com", "Mark", (byte)1, "Johnson", "555-123-4567", "William", "Edward" },
+                   { 4, "101 Maple Drive, Springfield", "2000-03-17", "lucy.green@email.com", "Lucy", (byte)2, "Green", "555-987-6543", "Alice", "Marie" },
+                   { 5, "202 Birch Lane, Springfield", "1992-07-05", "tom.taylor@email.com", "Tom", (byte)1, "Taylor", "321-654-9870", "Richard", "Henry" }
+                });
+
+
+            migrationBuilder.InsertData(
                 table: "Subjects",
                 columns: new[] { "SubjectID", "SubjectName" },
                 values: new object[,]
@@ -201,6 +220,17 @@ namespace study_center_ef.Migrations
                     { 3, "English" },
                     { 4, "History" },
                     { 5, "Geography" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "StudentID", "GradeLevelID", "PersonID" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 2 },
+                    { 3, 3, 3 },
+                    { 4, 4, 4 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -217,6 +247,11 @@ namespace study_center_ef.Migrations
                 name: "IX_Groups_ClassID",
                 table: "Groups",
                 column: "ClassID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_GradeLevelID",
+                table: "Students",
+                column: "GradeLevelID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_PersonID",
@@ -247,13 +282,13 @@ namespace study_center_ef.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "GradeLevels");
-
-            migrationBuilder.DropTable(
                 name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "Classes");
+
+            migrationBuilder.DropTable(
+                name: "GradeLevels");
 
             migrationBuilder.DropTable(
                 name: "People");

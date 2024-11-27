@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using study_center_ef.Entities;
@@ -8,6 +9,8 @@ public class AppDbContext : DbContext
     public DbSet<Class> Classes { get; set; }
     public DbSet<GradeLevel> GradeLevels { get; set; }
     public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Student> Students { get; set; }
+
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,6 +24,8 @@ public class AppDbContext : DbContext
         var connectionString = config.GetSection("connectionString").Value;
 
         optionsBuilder.UseSqlServer(connectionString);
+
+        optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

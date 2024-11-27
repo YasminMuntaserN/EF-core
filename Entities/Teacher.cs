@@ -13,7 +13,8 @@ namespace study_center_ef.Entities
         public DateTime HireDate { get; set; }
         public string Qualification { get; set; }
         public decimal Salary { get; set; }
-       // public int UserID { get; set; }
+    
+        // public int UserID { get; set; }
 
         public Person Person { get; set; }
        // public ICollection<TeacherSubject> TeacherSubjects { get; set; } = new List<TeacherSubject>();

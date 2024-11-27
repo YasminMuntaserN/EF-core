@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace study_center_ef.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241127093429_Initial")]
-    partial class Initial
+    [Migration("20241127112111_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,6 +238,73 @@ namespace study_center_ef.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("People", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PersonID = 1,
+                            Address = "123 Elm Street, Springfield",
+                            DateOfBirth = new DateTime(1990, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "john.doe@email.com",
+                            FirstName = "John",
+                            Gender = (byte)1,
+                            LastName = "Doe",
+                            PhoneNumber = "123-456-7890",
+                            SecondName = "Michael",
+                            ThirdName = "David"
+                        },
+                        new
+                        {
+                            PersonID = 2,
+                            Address = "456 Oak Avenue, Springfield",
+                            DateOfBirth = new DateTime(1995, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "jane.smith@email.com",
+                            FirstName = "Jane",
+                            Gender = (byte)2,
+                            LastName = "Smith",
+                            PhoneNumber = "987-654-3210",
+                            SecondName = "Maria",
+                            ThirdName = "Ann"
+                        },
+                        new
+                        {
+                            PersonID = 3,
+                            Address = "789 Pine Road, Springfield",
+                            DateOfBirth = new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "mark.johnson@email.com",
+                            FirstName = "Mark",
+                            Gender = (byte)1,
+                            LastName = "Johnson",
+                            PhoneNumber = "555-123-4567",
+                            SecondName = "William",
+                            ThirdName = "Edward"
+                        },
+                        new
+                        {
+                            PersonID = 4,
+                            Address = "101 Maple Drive, Springfield",
+                            DateOfBirth = new DateTime(2000, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "lucy.green@email.com",
+                            FirstName = "Lucy",
+                            Gender = (byte)2,
+                            LastName = "Green",
+                            PhoneNumber = "555-987-6543",
+                            SecondName = "Alice",
+                            ThirdName = "Marie"
+                        },
+                        new
+                        {
+                            PersonID = 5,
+                            Address = "202 Birch Lane, Springfield",
+                            DateOfBirth = new DateTime(1992, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "tom.taylor@email.com",
+                            FirstName = "Tom",
+                            Gender = (byte)1,
+                            LastName = "Taylor",
+                            PhoneNumber = "321-654-9870",
+                            SecondName = "Richard",
+                            ThirdName = "Henry"
+                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Student", b =>
@@ -248,18 +315,46 @@ namespace study_center_ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentID"));
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("DateTime");
+                    b.Property<int>("GradeLevelID")
+                        .HasColumnType("int");
 
                     b.Property<int>("PersonID")
                         .HasColumnType("int");
 
                     b.HasKey("StudentID");
 
+                    b.HasIndex("GradeLevelID");
+
                     b.HasIndex("PersonID")
                         .IsUnique();
 
                     b.ToTable("Students", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            StudentID = 1,
+                            GradeLevelID = 1,
+                            PersonID = 1
+                        },
+                        new
+                        {
+                            StudentID = 2,
+                            GradeLevelID = 2,
+                            PersonID = 2
+                        },
+                        new
+                        {
+                            StudentID = 3,
+                            GradeLevelID = 3,
+                            PersonID = 3
+                        },
+                        new
+                        {
+                            StudentID = 4,
+                            GradeLevelID = 4,
+                            PersonID = 4
+                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Subject", b =>
@@ -369,11 +464,19 @@ namespace study_center_ef.Migrations
 
             modelBuilder.Entity("study_center_ef.Entities.Student", b =>
                 {
+                    b.HasOne("study_center_ef.Entities.GradeLevel", "GradeLevel")
+                        .WithMany("Students")
+                        .HasForeignKey("GradeLevelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("study_center_ef.Entities.Person", "Person")
                         .WithOne("Student")
                         .HasForeignKey("study_center_ef.Entities.Student", "PersonID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("GradeLevel");
 
                     b.Navigation("Person");
                 });
@@ -387,6 +490,11 @@ namespace study_center_ef.Migrations
                         .IsRequired();
 
                     b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.GradeLevel", b =>
+                {
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Person", b =>

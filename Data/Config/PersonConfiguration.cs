@@ -39,7 +39,7 @@ namespace study_center_ef.Data.Config
             builder.Property(x => x.Address).HasColumnType("VARCHAR")
                  .HasMaxLength(255).IsRequired();
           
-            builder.Property(x => x.DateOfBirth).HasColumnType("DateTime")
+            builder.Property(x => x.DateOfBirth).HasColumnType("DateTime2")
                 .IsRequired();
 
             builder.Property(x => x.Gender).HasColumnType("TINYINT").IsRequired();
@@ -47,6 +47,7 @@ namespace study_center_ef.Data.Config
 
 
             builder.ToTable("People");
+            builder.HasData(SeedData.LoadPeople());
         }
     }
 }

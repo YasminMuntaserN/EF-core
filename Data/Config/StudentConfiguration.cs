@@ -18,8 +18,8 @@ namespace study_center_ef.Data.Config
             builder.Property(x => x.StudentID)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.CreationDate).HasColumnType("DateTime")
-                .IsRequired();
+            //builder.Property(x => x.CreationDate).HasColumnType("DateTime")
+            //    .IsRequired();
 
 
             builder.HasOne(x => x.Person)
@@ -27,7 +27,14 @@ namespace study_center_ef.Data.Config
                    .HasForeignKey<Student>(x => x.PersonID)
                    .IsRequired();
 
+           builder.HasOne(x => x.GradeLevel)
+                   .WithMany(x => x.Students)
+                   .HasForeignKey(x => x.GradeLevelID)
+                   .IsRequired();
+
             builder.ToTable("Students");
+            builder.HasData(SeedData.LoadStudents());
+
 
         }
     }
