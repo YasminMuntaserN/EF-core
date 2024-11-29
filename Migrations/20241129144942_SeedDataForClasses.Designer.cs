@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace study_center_ef.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241127112111_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20241129144942_SeedDataForClasses")]
+    partial class SeedDataForClasses
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,38 @@ namespace study_center_ef.Migrations
                         });
                 });
 
+            modelBuilder.Entity("study_center_ef.Entities.Enrollment", b =>
+                {
+                    b.Property<int>("EnrollmentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentID"));
+
+                    b.Property<DateTime>("DeletionDate")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime>("EnrollmentDate")
+                        .HasColumnType("DateTime");
+
+                    b.Property<int>("GroupID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("EnrollmentID");
+
+                    b.HasIndex("GroupID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("Enrollments", (string)null);
+                });
+
             modelBuilder.Entity("study_center_ef.Entities.GradeLevel", b =>
                 {
                     b.Property<int>("GradeLevelID")
@@ -96,28 +128,6 @@ namespace study_center_ef.Migrations
                     b.HasKey("GradeLevelID");
 
                     b.ToTable("GradeLevels", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            GradeLevelID = 1,
-                            GradeLevelName = "6th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 2,
-                            GradeLevelName = "7th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 3,
-                            GradeLevelName = "8th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 4,
-                            GradeLevelName = "9th Grade"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.GradeLevelSubject", b =>
@@ -179,11 +189,66 @@ namespace study_center_ef.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MeetingTimeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherSubjectID")
+                        .HasColumnType("int");
+
                     b.HasKey("GroupID");
 
                     b.HasIndex("ClassID");
 
+                    b.HasIndex("GradeLevelSubjectID");
+
+                    b.HasIndex("TeacherSubjectID");
+
                     b.ToTable("Groups", (string)null);
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.MeetingTime", b =>
+                {
+                    b.Property<int>("MeetingTimeID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("DateTime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("DateTime2");
+
+                    b.HasKey("MeetingTimeID");
+
+                    b.ToTable(" MeetingTimes", (string)null);
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Payment", b =>
+                {
+                    b.Property<int>("PaymentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal");
+
+                    b.Property<int>("GroupID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("DateTime2");
+
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PaymentID");
+
+                    b.HasIndex("GroupID");
+
+                    b.HasIndex("StudentID");
+
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Person", b =>
@@ -200,7 +265,7 @@ namespace study_center_ef.Migrations
                         .HasColumnType("VARCHAR");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("DateTime");
+                        .HasColumnType("DateTime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -238,73 +303,6 @@ namespace study_center_ef.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("People", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PersonID = 1,
-                            Address = "123 Elm Street, Springfield",
-                            DateOfBirth = new DateTime(1990, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "john.doe@email.com",
-                            FirstName = "John",
-                            Gender = (byte)1,
-                            LastName = "Doe",
-                            PhoneNumber = "123-456-7890",
-                            SecondName = "Michael",
-                            ThirdName = "David"
-                        },
-                        new
-                        {
-                            PersonID = 2,
-                            Address = "456 Oak Avenue, Springfield",
-                            DateOfBirth = new DateTime(1995, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "jane.smith@email.com",
-                            FirstName = "Jane",
-                            Gender = (byte)2,
-                            LastName = "Smith",
-                            PhoneNumber = "987-654-3210",
-                            SecondName = "Maria",
-                            ThirdName = "Ann"
-                        },
-                        new
-                        {
-                            PersonID = 3,
-                            Address = "789 Pine Road, Springfield",
-                            DateOfBirth = new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "mark.johnson@email.com",
-                            FirstName = "Mark",
-                            Gender = (byte)1,
-                            LastName = "Johnson",
-                            PhoneNumber = "555-123-4567",
-                            SecondName = "William",
-                            ThirdName = "Edward"
-                        },
-                        new
-                        {
-                            PersonID = 4,
-                            Address = "101 Maple Drive, Springfield",
-                            DateOfBirth = new DateTime(2000, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "lucy.green@email.com",
-                            FirstName = "Lucy",
-                            Gender = (byte)2,
-                            LastName = "Green",
-                            PhoneNumber = "555-987-6543",
-                            SecondName = "Alice",
-                            ThirdName = "Marie"
-                        },
-                        new
-                        {
-                            PersonID = 5,
-                            Address = "202 Birch Lane, Springfield",
-                            DateOfBirth = new DateTime(1992, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "tom.taylor@email.com",
-                            FirstName = "Tom",
-                            Gender = (byte)1,
-                            LastName = "Taylor",
-                            PhoneNumber = "321-654-9870",
-                            SecondName = "Richard",
-                            ThirdName = "Henry"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Student", b =>
@@ -325,36 +323,9 @@ namespace study_center_ef.Migrations
 
                     b.HasIndex("GradeLevelID");
 
-                    b.HasIndex("PersonID")
-                        .IsUnique();
+                    b.HasIndex("PersonID");
 
                     b.ToTable("Students", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            StudentID = 1,
-                            GradeLevelID = 1,
-                            PersonID = 1
-                        },
-                        new
-                        {
-                            StudentID = 2,
-                            GradeLevelID = 2,
-                            PersonID = 2
-                        },
-                        new
-                        {
-                            StudentID = 3,
-                            GradeLevelID = 3,
-                            PersonID = 3
-                        },
-                        new
-                        {
-                            StudentID = 4,
-                            GradeLevelID = 4,
-                            PersonID = 4
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Subject", b =>
@@ -365,6 +336,9 @@ namespace study_center_ef.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectID"));
 
+                    b.Property<int>("GradeLevelId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SubjectName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -372,34 +346,9 @@ namespace study_center_ef.Migrations
 
                     b.HasKey("SubjectID");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.HasIndex("GradeLevelId");
 
-                    b.HasData(
-                        new
-                        {
-                            SubjectID = 1,
-                            SubjectName = "Mathematics"
-                        },
-                        new
-                        {
-                            SubjectID = 2,
-                            SubjectName = "Science"
-                        },
-                        new
-                        {
-                            SubjectID = 3,
-                            SubjectName = "English"
-                        },
-                        new
-                        {
-                            SubjectID = 4,
-                            SubjectName = "History"
-                        },
-                        new
-                        {
-                            SubjectID = 5,
-                            SubjectName = "Geography"
-                        });
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Teacher", b =>
@@ -411,7 +360,7 @@ namespace study_center_ef.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherID"));
 
                     b.Property<DateTime>("HireDate")
-                        .HasColumnType("DateTime");
+                        .HasColumnType("DateTime2");
 
                     b.Property<int>("PersonID")
                         .HasColumnType("int");
@@ -426,24 +375,68 @@ namespace study_center_ef.Migrations
 
                     b.HasKey("TeacherID");
 
-                    b.HasIndex("PersonID")
-                        .IsUnique();
+                    b.HasIndex("PersonID");
 
                     b.ToTable("Teachers", (string)null);
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.TeacherSubject", b =>
+                {
+                    b.Property<int>("TeacherSubjectID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherSubjectID"));
+
+                    b.Property<int>("GradeLevelSubjectID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeacherSubjectID");
+
+                    b.HasIndex("GradeLevelSubjectID");
+
+                    b.HasIndex("TeacherID");
+
+                    b.ToTable("TeacherSubjects", (string)null);
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Enrollment", b =>
+                {
+                    b.HasOne("study_center_ef.Entities.Group", "Group")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("study_center_ef.Entities.Student", "Student")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.GradeLevelSubject", b =>
                 {
                     b.HasOne("study_center_ef.Entities.GradeLevel", "GradeLevel")
-                        .WithMany()
+                        .WithMany("GradeLevelSubjects")
                         .HasForeignKey("GradeLevelID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("study_center_ef.Entities.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("GradeLevelSubjects")
                         .HasForeignKey("SubjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("GradeLevel");
@@ -454,12 +447,58 @@ namespace study_center_ef.Migrations
             modelBuilder.Entity("study_center_ef.Entities.Group", b =>
                 {
                     b.HasOne("study_center_ef.Entities.Class", "Class")
-                        .WithMany()
+                        .WithMany("Groups")
                         .HasForeignKey("ClassID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("study_center_ef.Entities.GradeLevelSubject", "GradeLevelSubject")
+                        .WithMany("Groups")
+                        .HasForeignKey("GradeLevelSubjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("study_center_ef.Entities.TeacherSubject", "TeacherSubject")
+                        .WithMany("Groups")
+                        .HasForeignKey("TeacherSubjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Class");
+
+                    b.Navigation("GradeLevelSubject");
+
+                    b.Navigation("TeacherSubject");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.MeetingTime", b =>
+                {
+                    b.HasOne("study_center_ef.Entities.Group", "Group")
+                        .WithOne("MeetingTime")
+                        .HasForeignKey("study_center_ef.Entities.MeetingTime", "MeetingTimeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Payment", b =>
+                {
+                    b.HasOne("study_center_ef.Entities.Group", "Group")
+                        .WithMany("Payments")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("study_center_ef.Entities.Student", "Student")
+                        .WithMany("Payments")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Student", b =>
@@ -471,8 +510,8 @@ namespace study_center_ef.Migrations
                         .IsRequired();
 
                     b.HasOne("study_center_ef.Entities.Person", "Person")
-                        .WithOne("Student")
-                        .HasForeignKey("study_center_ef.Entities.Student", "PersonID")
+                        .WithMany("Students")
+                        .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -481,29 +520,105 @@ namespace study_center_ef.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("study_center_ef.Entities.Subject", b =>
+                {
+                    b.HasOne("study_center_ef.Entities.GradeLevel", "GradeLevel")
+                        .WithMany("Subjects")
+                        .HasForeignKey("GradeLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeLevel");
+                });
+
             modelBuilder.Entity("study_center_ef.Entities.Teacher", b =>
                 {
                     b.HasOne("study_center_ef.Entities.Person", "Person")
-                        .WithOne("Teacher")
-                        .HasForeignKey("study_center_ef.Entities.Teacher", "PersonID")
+                        .WithMany("Teachers")
+                        .HasForeignKey("PersonID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("study_center_ef.Entities.TeacherSubject", b =>
+                {
+                    b.HasOne("study_center_ef.Entities.GradeLevelSubject", "GradeLevelSubject")
+                        .WithMany("TeacherSubjects")
+                        .HasForeignKey("GradeLevelSubjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("study_center_ef.Entities.Teacher", "Teacher")
+                        .WithMany("TeacherSubjects")
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeLevelSubject");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Class", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("study_center_ef.Entities.GradeLevel", b =>
                 {
+                    b.Navigation("GradeLevelSubjects");
+
                     b.Navigation("Students");
+
+                    b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.GradeLevelSubject", b =>
+                {
+                    b.Navigation("Groups");
+
+                    b.Navigation("TeacherSubjects");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Group", b =>
+                {
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("MeetingTime")
+                        .IsRequired();
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Person", b =>
                 {
-                    b.Navigation("Student")
-                        .IsRequired();
+                    b.Navigation("Students");
 
-                    b.Navigation("Teacher")
-                        .IsRequired();
+                    b.Navigation("Teachers");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Student", b =>
+                {
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Subject", b =>
+                {
+                    b.Navigation("GradeLevelSubjects");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.Teacher", b =>
+                {
+                    b.Navigation("TeacherSubjects");
+                });
+
+            modelBuilder.Entity("study_center_ef.Entities.TeacherSubject", b =>
+                {
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace study_center_ef.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241129144146_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,36 +48,6 @@ namespace study_center_ef.Migrations
                     b.HasKey("ClassID");
 
                     b.ToTable("Classes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ClassID = 1,
-                            Capacity = (byte)30,
-                            ClassName = "Math-101",
-                            Description = "Intro to Algebra"
-                        },
-                        new
-                        {
-                            ClassID = 2,
-                            Capacity = (byte)25,
-                            ClassName = "Sci-102",
-                            Description = "Basic Chemistry"
-                        },
-                        new
-                        {
-                            ClassID = 3,
-                            Capacity = (byte)20,
-                            ClassName = "Eng-201",
-                            Description = "Advanced Grammar"
-                        },
-                        new
-                        {
-                            ClassID = 4,
-                            Capacity = (byte)15,
-                            ClassName = "Hist-301",
-                            Description = "World History"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Enrollment", b =>
@@ -86,10 +59,10 @@ namespace study_center_ef.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrollmentID"));
 
                     b.Property<DateTime>("DeletionDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<DateTime>("EnrollmentDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<int>("GroupID")
                         .HasColumnType("int");
@@ -107,26 +80,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("StudentID");
 
                     b.ToTable("Enrollments", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            EnrollmentID = 1,
-                            DeletionDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EnrollmentDate = new DateTime(2024, 9, 29, 20, 37, 18, 873, DateTimeKind.Local).AddTicks(8281),
-                            GroupID = 1,
-                            IsActive = true,
-                            StudentID = 1
-                        },
-                        new
-                        {
-                            EnrollmentID = 2,
-                            DeletionDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EnrollmentDate = new DateTime(2024, 10, 29, 20, 37, 18, 876, DateTimeKind.Local).AddTicks(2634),
-                            GroupID = 2,
-                            IsActive = true,
-                            StudentID = 2
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.GradeLevel", b =>
@@ -145,28 +98,6 @@ namespace study_center_ef.Migrations
                     b.HasKey("GradeLevelID");
 
                     b.ToTable("GradeLevels", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            GradeLevelID = 1,
-                            GradeLevelName = "6th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 2,
-                            GradeLevelName = "7th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 3,
-                            GradeLevelName = "8th Grade"
-                        },
-                        new
-                        {
-                            GradeLevelID = 4,
-                            GradeLevelName = "9th Grade"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.GradeLevelSubject", b =>
@@ -198,40 +129,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("SubjectID");
 
                     b.ToTable("GradeLevelSubjects", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            GradeLevelSubjectID = 1,
-                            Fees = 100,
-                            GradeLevelID = 1,
-                            SubjectID = 1,
-                            Title = "6th Grade - Mathematics"
-                        },
-                        new
-                        {
-                            GradeLevelSubjectID = 2,
-                            Fees = 120,
-                            GradeLevelID = 2,
-                            SubjectID = 2,
-                            Title = "7th Grade - Science"
-                        },
-                        new
-                        {
-                            GradeLevelSubjectID = 3,
-                            Fees = 110,
-                            GradeLevelID = 3,
-                            SubjectID = 3,
-                            Title = "8th Grade - English"
-                        },
-                        new
-                        {
-                            GradeLevelSubjectID = 4,
-                            Fees = 130,
-                            GradeLevelID = 4,
-                            SubjectID = 4,
-                            Title = "9th Grade - History"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Group", b =>
@@ -277,32 +174,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("TeacherSubjectID");
 
                     b.ToTable("Groups", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            GroupID = 1,
-                            ClassID = 1,
-                            CreationDate = new DateTime(2024, 5, 29, 19, 52, 1, 0, DateTimeKind.Unspecified),
-                            GradeLevelSubjectID = 1,
-                            GroupName = "Math Morning Group",
-                            GroupStudentCount = 20,
-                            IsActive = true,
-                            MeetingTimeID = 1,
-                            TeacherSubjectID = 1
-                        },
-                        new
-                        {
-                            GroupID = 2,
-                            ClassID = 2,
-                            CreationDate = new DateTime(2024, 4, 29, 19, 52, 1, 0, DateTimeKind.Unspecified),
-                            GradeLevelSubjectID = 2,
-                            GroupName = "Science Evening Group",
-                            GroupStudentCount = 25,
-                            IsActive = true,
-                            MeetingTimeID = 2,
-                            TeacherSubjectID = 2
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.MeetingTime", b =>
@@ -318,21 +189,7 @@ namespace study_center_ef.Migrations
 
                     b.HasKey("MeetingTimeID");
 
-                    b.ToTable("MeetingTimes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            MeetingTimeID = 1,
-                            EndTime = new DateTime(2024, 8, 10, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartTime = new DateTime(2024, 8, 10, 9, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            MeetingTimeID = 2,
-                            EndTime = new DateTime(2024, 8, 11, 20, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartTime = new DateTime(2024, 8, 11, 18, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
+                    b.ToTable(" MeetingTimes", (string)null);
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Payment", b =>
@@ -416,73 +273,6 @@ namespace study_center_ef.Migrations
                     b.HasKey("PersonID");
 
                     b.ToTable("People", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PersonID = 1,
-                            Address = "123 Elm Street, Springfield",
-                            DateOfBirth = new DateTime(1990, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "john.doe@email.com",
-                            FirstName = "John",
-                            Gender = (byte)1,
-                            LastName = "Doe",
-                            PhoneNumber = "123-456-7890",
-                            SecondName = "Michael",
-                            ThirdName = "David"
-                        },
-                        new
-                        {
-                            PersonID = 2,
-                            Address = "456 Oak Avenue, Springfield",
-                            DateOfBirth = new DateTime(1995, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "jane.smith@email.com",
-                            FirstName = "Jane",
-                            Gender = (byte)2,
-                            LastName = "Smith",
-                            PhoneNumber = "987-654-3210",
-                            SecondName = "Maria",
-                            ThirdName = "Ann"
-                        },
-                        new
-                        {
-                            PersonID = 3,
-                            Address = "789 Pine Road, Springfield",
-                            DateOfBirth = new DateTime(1988, 11, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "mark.johnson@email.com",
-                            FirstName = "Mark",
-                            Gender = (byte)1,
-                            LastName = "Johnson",
-                            PhoneNumber = "555-123-4567",
-                            SecondName = "William",
-                            ThirdName = "Edward"
-                        },
-                        new
-                        {
-                            PersonID = 4,
-                            Address = "101 Maple Drive, Springfield",
-                            DateOfBirth = new DateTime(2000, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "lucy.green@email.com",
-                            FirstName = "Lucy",
-                            Gender = (byte)2,
-                            LastName = "Green",
-                            PhoneNumber = "555-987-6543",
-                            SecondName = "Alice",
-                            ThirdName = "Marie"
-                        },
-                        new
-                        {
-                            PersonID = 5,
-                            Address = "202 Birch Lane, Springfield",
-                            DateOfBirth = new DateTime(1992, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "tom.taylor@email.com",
-                            FirstName = "Tom",
-                            Gender = (byte)1,
-                            LastName = "Taylor",
-                            PhoneNumber = "321-654-9870",
-                            SecondName = "Richard",
-                            ThirdName = "Henry"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Student", b =>
@@ -506,54 +296,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("PersonID");
 
                     b.ToTable("Students", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            StudentID = 1,
-                            GradeLevelID = 1,
-                            PersonID = 1
-                        },
-                        new
-                        {
-                            StudentID = 2,
-                            GradeLevelID = 2,
-                            PersonID = 2
-                        },
-                        new
-                        {
-                            StudentID = 3,
-                            GradeLevelID = 3,
-                            PersonID = 3
-                        },
-                        new
-                        {
-                            StudentID = 4,
-                            GradeLevelID = 4,
-                            PersonID = 4
-                        });
-                });
-
-            modelBuilder.Entity("study_center_ef.Entities.StudentDetail", b =>
-                {
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GradeLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StudentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StudentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("StudentsDetails", (string)null);
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Subject", b =>
@@ -577,32 +319,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("GradeLevelId");
 
                     b.ToTable("Subjects", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            SubjectID = 1,
-                            GradeLevelId = 1,
-                            SubjectName = "Mathematics"
-                        },
-                        new
-                        {
-                            SubjectID = 2,
-                            GradeLevelId = 2,
-                            SubjectName = "Science"
-                        },
-                        new
-                        {
-                            SubjectID = 3,
-                            GradeLevelId = 3,
-                            SubjectName = "English"
-                        },
-                        new
-                        {
-                            SubjectID = 4,
-                            GradeLevelId = 5,
-                            SubjectName = "History"
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Teacher", b =>
@@ -632,65 +348,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("PersonID");
 
                     b.ToTable("Teachers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            TeacherID = 1,
-                            HireDate = new DateTime(2015, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PersonID = 1,
-                            Qualification = "MSc in Mathematics",
-                            Salary = 50000m
-                        },
-                        new
-                        {
-                            TeacherID = 2,
-                            HireDate = new DateTime(2015, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PersonID = 2,
-                            Qualification = "MSc in Physics",
-                            Salary = 55000m
-                        },
-                        new
-                        {
-                            TeacherID = 3,
-                            HireDate = new DateTime(2015, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PersonID = 3,
-                            Qualification = "BA in English Literature",
-                            Salary = 45000m
-                        },
-                        new
-                        {
-                            TeacherID = 4,
-                            HireDate = new DateTime(2015, 9, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PersonID = 4,
-                            Qualification = "PhD in History",
-                            Salary = 60000m
-                        });
-                });
-
-            modelBuilder.Entity("study_center_ef.Entities.TeacherDetail", b =>
-                {
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Qualification")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TeacherID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TeacherName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("TeachersDetails", (string)null);
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.TeacherSubject", b =>
@@ -717,36 +374,6 @@ namespace study_center_ef.Migrations
                     b.HasIndex("TeacherID");
 
                     b.ToTable("TeacherSubjects", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            TeacherSubjectID = 1,
-                            GradeLevelSubjectID = 1,
-                            IsActive = true,
-                            TeacherID = 1
-                        },
-                        new
-                        {
-                            TeacherSubjectID = 2,
-                            GradeLevelSubjectID = 2,
-                            IsActive = true,
-                            TeacherID = 2
-                        },
-                        new
-                        {
-                            TeacherSubjectID = 3,
-                            GradeLevelSubjectID = 3,
-                            IsActive = false,
-                            TeacherID = 3
-                        },
-                        new
-                        {
-                            TeacherSubjectID = 4,
-                            GradeLevelSubjectID = 4,
-                            IsActive = true,
-                            TeacherID = 4
-                        });
                 });
 
             modelBuilder.Entity("study_center_ef.Entities.Enrollment", b =>
