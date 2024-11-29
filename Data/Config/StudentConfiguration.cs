@@ -18,16 +18,15 @@ namespace study_center_ef.Data.Config
             builder.Property(x => x.StudentID)
                    .ValueGeneratedOnAdd();
 
-            //builder.Property(x => x.CreationDate).HasColumnType("DateTime")
-            //    .IsRequired();
 
-
+            // add one-many relationship between Person and Students  
             builder.HasOne(x => x.Person)
-                   .WithOne(x => x.Student)
-                   .HasForeignKey<Student>(x => x.PersonID)
+                   .WithMany(x => x.Students)
+                   .HasForeignKey(x => x.PersonID)
                    .IsRequired();
 
-           builder.HasOne(x => x.GradeLevel)
+            // add one-many relationship between GradeLevel and Students  
+            builder.HasOne(x => x.GradeLevel)
                    .WithMany(x => x.Students)
                    .HasForeignKey(x => x.GradeLevelID)
                    .IsRequired();

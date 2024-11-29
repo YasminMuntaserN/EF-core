@@ -15,23 +15,28 @@ namespace study_center_ef.Data.Config
         public void Configure(EntityTypeBuilder<Teacher> builder)
         {
             builder.HasKey(x => x.TeacherID);
+
             builder.Property(x => x.TeacherID)
                    .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Qualification).HasColumnType("VARCHAR")
                 .HasMaxLength(255).IsRequired();
 
-            builder.Property(x => x.HireDate).HasColumnType("DateTime")
+            builder.Property(x => x.HireDate).HasColumnType("DateTime2")
                 .IsRequired();
 
             builder.Property(x => x.Salary).HasColumnType("decimal");
 
+
+            // add one-many relationship between Person and Teachers  
             builder.HasOne(x => x.Person)
-                   .WithOne(x => x.Teacher)
-                   .HasForeignKey<Teacher>(x => x.PersonID)
+                   .WithMany(x => x.Teachers)
+                   .HasForeignKey(x => x.PersonID)
                    .IsRequired();
 
             builder.ToTable("Teachers");
+            builder.HasData(SeedData.LoadTeachers());
+
         }
     }
 }

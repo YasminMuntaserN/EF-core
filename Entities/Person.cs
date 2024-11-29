@@ -12,8 +12,11 @@
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public Teacher Teacher { get; set; } 
-        public Student Student { get; set; } 
+
+        public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
+
+        public ICollection<Student> Students { get; set; } = new List<Student>();
+
 
 
     }
