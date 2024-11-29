@@ -26,7 +26,7 @@ namespace study_center_ef.Data.Config
             builder.Property(x => x.Capacity).HasColumnType("TINYINT").IsRequired();
 
             builder.ToTable("Classes");
-            builder.HasData(SeedData.LoadClasses());
+           builder.HasData(SeedData.LoadClasses());
         }
     }
 }

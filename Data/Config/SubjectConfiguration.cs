@@ -19,18 +19,16 @@ namespace study_center_ef.Data.Config
             builder.Property(x => x.SubjectName).HasColumnType("VARCHAR")
                  .HasMaxLength(255).IsRequired();
 
+            //add one-many relationship between GradeLevel and Subjects
+            builder.HasOne(x => x.GradeLevel)
+                         .WithMany(x => x.Subjects)
+                         .HasForeignKey(x => x.GradeLevelId)
+                         .IsRequired();
+
 
             builder.ToTable("Subjects");
 
-          /*  builder.HasMany(s => s.GradeLevels)
-                .WithMany(g => g.Subjects)
-                .UsingEntity<Dictionary<string, object>>(
-                    "GradeLevelSubjects",
-                    j => j.HasOne<GradeLevel>().WithMany().HasForeignKey("GradeLevelID"),
-                    j => j.HasOne<Subject>().WithMany().HasForeignKey("SubjectID")
-                );
-          */
-            builder.HasData(SeedData.LoadSubjects());
+           builder.HasData(SeedData.LoadSubjects());
             
         }
     }

@@ -4,7 +4,12 @@
     {
         public int SubjectID { get; set; }
         public string? SubjectName { get; set; }
-       // public ICollection<GradeLevel> GradeLevels { get; set; } = new List<GradeLevel>();
+
+        public int GradeLevelId { get; set; }
+        public GradeLevel GradeLevel { get; set; }
+
+        public ICollection<GradeLevelSubject> GradeLevelSubjects { get; set; } = new List<GradeLevelSubject>();
+
     }
 
 

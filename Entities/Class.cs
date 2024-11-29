@@ -7,7 +7,7 @@
         public byte Capacity { get; set; }
         public string? Description { get; set; }
 
-     //   public ICollection<Group> Groups { get; set; } = new List<Group>();
+        public ICollection<Group> Groups { get; set; } = new List<Group>();
     }
 
 
