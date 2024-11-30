@@ -54,12 +54,12 @@ namespace study_center_ef.Data.Config
 
             // one to one retationship between MeetingTime and Group
             builder.HasOne(x => x.MeetingTime)
-                   .WithOne(x => x.Group)
-                   .HasForeignKey<MeetingTime>(x => x.MeetingTimeID)
-                   .IsRequired();
+                .WithOne(x => x.Group)
+                .HasForeignKey<MeetingTime>(x => x.MeetingTimeID)
+                .IsRequired();
 
             builder.ToTable("Groups");
-            builder.HasData(SeedData.LoadGroups());
+           // builder.HasData(SeedData.LoadGroups());
         }
     }
 }

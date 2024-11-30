@@ -31,7 +31,7 @@ namespace study_center_ef.Data.Config
 
             builder.ToTable("TeacherSubjects");
 
-           builder.HasData(SeedData.LoadTeacherSubjects());
+         //  builder.HasData(SeedData.LoadTeacherSubjects());
         }
     }
 }

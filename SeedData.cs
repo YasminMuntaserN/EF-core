@@ -185,10 +185,10 @@ namespace study_center_ef
 
         public static List<TeacherSubject> LoadTeacherSubjects() => new()
         {
-        new TeacherSubject { TeacherSubjectID = 1, TeacherID = 1, GradeLevelSubjectID = 1, IsActive = true },
-        new TeacherSubject { TeacherSubjectID = 2, TeacherID = 2, GradeLevelSubjectID = 2, IsActive = true },
-        new TeacherSubject { TeacherSubjectID = 3, TeacherID = 3, GradeLevelSubjectID = 3, IsActive = false },
-        new TeacherSubject { TeacherSubjectID = 4, TeacherID = 4, GradeLevelSubjectID = 4, IsActive = true },
+        new TeacherSubject {  TeacherID = 1, GradeLevelSubjectID = 1, IsActive = true },
+        new TeacherSubject {  TeacherID = 2, GradeLevelSubjectID = 2, IsActive = true },
+        new TeacherSubject {  TeacherID = 3, GradeLevelSubjectID = 3, IsActive = false },
+        new TeacherSubject {  TeacherID = 4, GradeLevelSubjectID = 4, IsActive = true },
         };
 
         public static List<MeetingTime> LoadMeetingTimes() => new()
@@ -211,7 +211,7 @@ namespace study_center_ef
         {
             new Group
             {
-                GroupID = 1,
+                //GroupID = 1,
                 GroupName = "Math Morning Group",
                 ClassID = 1,
                 GradeLevelSubjectID = 1,
@@ -223,7 +223,7 @@ namespace study_center_ef
             },
             new Group
             {
-                GroupID = 2,
+               // GroupID = 2,
                 GroupName = "Science Evening Group",
                 ClassID = 2,
                 GradeLevelSubjectID = 2,
@@ -239,18 +239,16 @@ namespace study_center_ef
         {
             new Enrollment
             {
-                EnrollmentID = 1,
                 StudentID = 1,
-                GroupID = 1,
+                GroupID = 5,
                 EnrollmentDate = DateTime.Now.AddMonths(-2),
                 DeletionDate = DateTime.MinValue,
                 IsActive = true
             },
             new Enrollment
             {
-                EnrollmentID = 2,
                 StudentID = 2,
-                GroupID = 2,
+                GroupID = 6,
                 EnrollmentDate = DateTime.Now.AddMonths(-1),
                 DeletionDate = DateTime.MinValue,
                 IsActive = true

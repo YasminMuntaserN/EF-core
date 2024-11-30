@@ -40,7 +40,7 @@ namespace study_center_ef.Data.Config
                    .IsRequired();
 
             builder.ToTable("Enrollments");
-            builder.HasData(SeedData.LoadEnrollments());
+            //builder.HasData(SeedData.LoadEnrollments());
         }
     }
 }

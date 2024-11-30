@@ -24,7 +24,7 @@ namespace study_center_ef.Data.Config
 
             builder.ToTable("MeetingTimes");
 
-            builder.HasData(SeedData.LoadMeetingTimes());
+            //builder.HasData(SeedData.LoadMeetingTimes());
         }
     }
 }
